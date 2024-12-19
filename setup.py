@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="code_parser",
+    name="SmartParse",
     version="0.1.0",
     author="Harrison Sherwood",
     description="A way to intelligently chunk code files into nodes.",

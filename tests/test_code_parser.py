@@ -1,5 +1,5 @@
 import unittest
-from code_parser.code_parser import CodeParser
+from SmartParse.SmartParse import CodeParser
 
 class TestCodeParser(unittest.TestCase):
     def test_basic_parsing(self):
