@@ -10,7 +10,7 @@ A way to intelligently chunk code files into nodes.
 ## Installation
 Install directly from GitHub:
 ```bash
-pip install git+https://github.com/yourusername/code_parser.git
+pip install git+https://github.com/egdemems/SmartParse.git
 ```
 
 ## Usage
