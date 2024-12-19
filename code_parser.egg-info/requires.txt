@@ -1,7 +1,0 @@
-tree-sitter==0.23.2
-tree-sitter-javascript
-tree-sitter-python
-tree-sitter-ruby
-tree-sitter-go
-tree-sitter-java
-tree-sitter-cpp
