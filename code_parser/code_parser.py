@@ -1,7 +1,6 @@
 from tree_sitter import Language, Parser
 from get_languages import GetLanguages
 import bisect
-from pprint import pprint
 
 class CodeParser:
     def __init__(self, language_name, file_path, file_content):
