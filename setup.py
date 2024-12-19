@@ -16,7 +16,7 @@ setup(
     ],
     python_requires=">=3.6",
     install_requires=[
-        "tree-sitter==0.20.0",
+        "tree-sitter==0.23.2",
         "tree-sitter-javascript",
         "tree-sitter-python",
         "tree-sitter-ruby",
