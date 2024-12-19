@@ -91,7 +91,7 @@ class CodeParser:
         
         return results
             
-    def make_chunks(self, language_name, file_content, lines, tree):
+    def make_chunks(self, language_name, file_content):
         language = Language(GetLanguages.get_language(language_name))
         parser = Parser(language)
         tree = parser.parse(file_content, encoding="utf8")
