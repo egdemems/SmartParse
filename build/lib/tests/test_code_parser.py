@@ -5,7 +5,7 @@ class TestCodeParser(unittest.TestCase):
     def test_basic_parsing(self):
         # A simple test that ensures CodeParser can be instantiated and run
         sample_code = "def foo():\n    return 42\n"
-        parser = CodeParser(language_name="python", file_path="sample.py", file_content=sample_code.encode('utf-8'))
+        parser = CodeParser(language_name="python", file_path="sample.py", file_content=sample_code)
         self.assertIsNotNone(parser.tree)
         self.assertTrue(parser.results)  # Check if results are produced
 

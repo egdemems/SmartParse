@@ -1,0 +1,44 @@
+Metadata-Version: 2.1
+Name: code_parser
+Version: 0.1.0
+Summary: A way to intelligently chunk code files into nodes.
+Home-page: https://github.com/egdemems/SmartParse
+Author: Harrison Sherwood
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: tree-sitter==0.23.2
+Requires-Dist: tree-sitter-javascript
+Requires-Dist: tree-sitter-python
+Requires-Dist: tree-sitter-ruby
+Requires-Dist: tree-sitter-go
+Requires-Dist: tree-sitter-java
+Requires-Dist: tree-sitter-cpp
+
+# SmartParse
+
+A way to intelligently chunk code files into nodes.
+
+## Features
+- Supports multiple languages: Python, JavaScript, Ruby, Go, Java, C++.
+- Parses code into structured nodes for easy manipulation.
+- Combines multi-line nodes into manageable chunks.
+
+## Installation
+Install directly from GitHub:
+```bash
+pip install git+https://github.com/egdemems/SmartParse.git
+```
+
+## Usage
+```python
+from code_parser import CodeParser
+
+file_path = "/example/path.py"
+with open(file_path, 'rb') as file:
+    file_content = file.read()
+parser = CodeParser(language_name="python", file_path=file_path, file_content=file_content)
+results = parser.results
+```
