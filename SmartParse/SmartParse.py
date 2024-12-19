@@ -3,7 +3,6 @@ from .get_languages import GetLanguages
 import bisect
 
 class CodeParser:
-
     def split_lines(self, file_content):
         lines = []
         start_byte = 0
@@ -18,7 +17,13 @@ class CodeParser:
         index = bisect.bisect_right(start_bytes, byte_position) - 1
         return lines[index] if index >= 0 else None
 
-    def walk(self, parent, lines, lines_depth, seen={}, seen_lines=[], seen_parents=[], depth=0):
+    def walk(self, parent, lines, lines_depth, seen=None, seen_lines=None, seen_parents=None, depth=0):
+        if seen is None:
+            seen = {}
+        if seen_lines is None:
+            seen_lines = []
+        if seen_parents is None:
+            seen_parents = []
         for child in parent.children:
             start = child.start_byte
             end = child.end_byte
@@ -86,7 +91,7 @@ class CodeParser:
         
         return results
             
-    def make_chunks(self, language_name, file_content):
+    def make_chunks(self, language_name, file_content, lines, tree):
         language = Language(GetLanguages.get_language(language_name))
         parser = Parser(language)
         tree = parser.parse(file_content, encoding="utf8")
