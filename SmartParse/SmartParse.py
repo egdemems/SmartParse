@@ -90,6 +90,17 @@ class CodeParser:
                 del results[d] 
         
         return results
+    
+    def get_child_nodes(self, results):
+        node_childs = {}
+        for result in results.items():
+            for line in result[1]:
+                if line[0] == 'n':
+                    if result[0] in node_childs:
+                        node_childs[result[0]].append(line[1])
+                    else:
+                        node_childs[result[0]] = [line[1]]
+        return node_childs
             
     def make_chunks(self, language_name, file_content):
         language = Language(GetLanguages.get_language(language_name))

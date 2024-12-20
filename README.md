@@ -15,11 +15,27 @@ pip install git+https://github.com/egdemems/SmartParse.git
 
 ## Usage
 ```python
-from code_parser import CodeParser
+from SmartParse import CodeParser
 
 file_path = "/example/path.py"
+    
+parser = CodeParser()
+
 with open(file_path, 'rb') as file:
     file_content = file.read()
-parser = CodeParser(language_name="python", file_path=file_path, file_content=file_content)
-results = parser.results
+
+results = parser.make_chunks(language_name="python", file_content=file_content)
+node_childs = parser.get_child_nodes(results)
+
+for key, result in results.items():
+    print(f"\033[2m**NODE: {key}**\033[0m\n")
+    for line in result: 
+        if isinstance(line[0], bytes):
+            print(line[0].decode("utf-8").rstrip("\n"))     
+        else:
+            print(f"\033[90mnode {line[1]}\033[0m")
+    print("\n" + ("-" * 100))
+
+for node in node_childs.items():
+    print(node)
 ```
