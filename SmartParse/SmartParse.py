@@ -1,5 +1,5 @@
 from tree_sitter import Language, Parser
-from get_languages import GetLanguages
+from .get_languages import GetLanguages
 
 class CodeParser:
   
