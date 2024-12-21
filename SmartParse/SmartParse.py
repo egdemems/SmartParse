@@ -1,5 +1,5 @@
 from tree_sitter import Language, Parser
-from .get_languages import GetLanguages
+from get_languages import GetLanguages
 
 class CodeParser:
   
@@ -24,16 +24,22 @@ class CodeParser:
         lines = file_content.splitlines()
         return list(enumerate(lines))
     
-    def get_text_chunks(self, chunks):
+    def get_text_chunks(self, chunks, line_numbers=True):
         text_chunks = []
         for node in chunks.items():
             chunk_text = ""
             for i, line in enumerate(node[1]):
                 if line[0] == (node[1][i-1][0] + 1) or i == 0:
-                    chunk_text += f"{line[0]} {line[1].decode("utf-8")}\n"
+                    if line_numbers:
+                        chunk_text += f"{line[0]} {line[1].decode("utf-8")}\n"
+                    else:
+                        chunk_text += f"{line[1].decode("utf-8")}\n"
                 elif i > 0:
                     chunk_text += "\n... existing code... \n\n"
-                    chunk_text += f"{line[0]} {line[1].decode("utf-8")}\n"
+                    if line_numbers:
+                        chunk_text += f"{line[0]} {line[1].decode("utf-8")}\n"
+                    else:
+                        chunk_text += f"{line[1].decode("utf-8")}\n"
             text_chunks.append(chunk_text)
         return text_chunks
     
