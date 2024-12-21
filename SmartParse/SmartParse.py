@@ -3,31 +3,47 @@ from .get_languages import GetLanguages
 
 class CodeParser:
   
-    def walk(self, parent, lines, nodes={}, seen_lines=[]):
-        if seen_lines is None:
-            seen_lines = []
-        enumerated_lines = list(enumerate(lines))
+    def walk(self, parent, lines, seen_lines, nodes={}):
         for child in parent.named_children:
             identifier = child.type
-            start_line = child.start_point[0]
-            end_line = child.end_point[0] + 1
-            self.walk(child, lines, nodes)
+            start = child.start_point[0]
+            end = child.end_point[0] + 1
+            self.walk(child, lines, seen_lines, nodes)
             if len(child.text.splitlines()) > 1 and child.named_child_count > 1:
-                for line in enumerated_lines[start_line:end_line]:
+                for line in lines[start:end]:
                     if line not in seen_lines:
                         seen_lines.append(line)
-                        if child.start_byte not in nodes:
-                            nodes[child.start_byte] = [line]
+                        if start not in nodes:
+                            nodes[start] = [line]
                         else:
-                            nodes[child.start_byte].append(line)
+                            nodes[start].append(line)
             
         return nodes
+    
+    def get_lines(self, file_content):
+        lines = file_content.splitlines()
+        return list(enumerate(lines))
+    
+    def get_text_chunks(self, chunks):
+        text_chunks = []
+        for node in chunks.items():
+            chunk_text = ""
+            for i, line in enumerate(node[1]):
+                if line[0] == (node[1][i-1][0] + 1) or i == 0:
+                    chunk_text += f"{line[0]} {line[1].decode("utf-8")}\n"
+                elif i > 0:
+                    chunk_text += "\n... existing code... \n\n"
+                    chunk_text += f"{line[0]} {line[1].decode("utf-8")}\n"
+            text_chunks.append(chunk_text)
+        return text_chunks
     
     def make_chunks(self, language_name, file_content):
         language = Language(GetLanguages.get_language(language_name))
         parser = Parser(language)
         tree = parser.parse(file_content, encoding="utf8")
-        lines = file_content.splitlines()
-        print(len(lines))
-        results = self.walk(tree.root_node, lines)
+        lines = self.get_lines(file_content)
+        seen_lines=[]
+        results = self.walk(tree.root_node, lines, seen_lines)
+        extra = [line for line in lines if line not in seen_lines]
+        results[extra[0][0]] = extra
         return results
