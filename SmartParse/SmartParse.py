@@ -24,6 +24,19 @@ class CodeParser:
         lines = file_content.splitlines()
         return list(enumerate(lines))
     
+    def get_chunk_pairs(self, chunks, text_chunks):
+        chunk_pairs = []
+        for i, chunk in enumerate(chunks.items()):
+            chunk_pair = {"chunk": chunk, "text": text_chunks[i]}
+            chunk_pairs.append(chunk_pair)
+        return chunk_pairs
+
+    def get_chunks(self, language, file_content):
+        chunks = self.make_chunks(language=language, file_content=file_content)
+        text_chunks = self.get_text_chunks(chunks, line_numbers=False)
+        chunk_pairs = self.get_chunk_pairs(chunks, text_chunks)
+        return chunk_pairs
+    
     def get_text_chunks(self, chunks, line_numbers=True):
         text_chunks = []
         for node in chunks.items():
@@ -43,8 +56,8 @@ class CodeParser:
             text_chunks.append(chunk_text)
         return text_chunks
     
-    def make_chunks(self, language_name, file_content):
-        language = Language(GetLanguages.get_language(language_name))
+    def make_chunks(self, language, file_content):
+        language = Language(GetLanguages.get_language(language))
         parser = Parser(language)
         tree = parser.parse(file_content, encoding="utf8")
         lines = self.get_lines(file_content)
