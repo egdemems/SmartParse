@@ -25,9 +25,8 @@ parser = CodeParser()
 with open(file_path, 'rb') as file:
     file_content = file.read()
 
-chunks = parser.make_chunks(language_name=language, file_content=file_content)
-text_chunks = parser.get_text_chunks(chunks)
+chunks = parser.get_chunks(language=language, file_content=file_content)
 
-for chunk in text_chunks:
-    print(chunk)
+for chunk in chunks:
+    print(chunk["text"])
 ```
