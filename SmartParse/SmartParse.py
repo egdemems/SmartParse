@@ -31,9 +31,9 @@ class CodeParser:
             chunk_pairs.append(chunk_pair)
         return chunk_pairs
 
-    def get_chunks(self, language, file_content):
+    def get_chunks(self, language, file_content, line_numbers=True):
         chunks = self.make_chunks(language=language, file_content=file_content)
-        text_chunks = self.get_text_chunks(chunks, line_numbers=False)
+        text_chunks = self.get_text_chunks(chunks, line_numbers)
         chunk_pairs = self.get_chunk_pairs(chunks, text_chunks)
         return chunk_pairs
     
