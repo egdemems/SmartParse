@@ -11,8 +11,9 @@ class CodeParser:
             start = child.start_point[0]
             end = child.end_point[0] + 1
             self.walk(child, lines, seen_lines, nodes)
-            if len(child.text.splitlines()) > 1 and child.named_child_count > 1:
-                for line in lines[start:end]:
+            child_lines = [line for line in lines[start:end] if line not in seen_lines]
+            if len(child_lines) > 4 and child.named_child_count > 1:
+                for line in child_lines:
                     if line not in seen_lines:
                         seen_lines.append(line)
                         if start not in nodes:
@@ -50,7 +51,7 @@ class CodeParser:
                     else:
                         chunk_text += f"{line[1].decode("utf-8")}\n"
                 elif i > 0:
-                    chunk_text += "\n... existing code... \n\n"
+                    chunk_text += "\n"
                     if line_numbers:
                         chunk_text += f"{line[0]} {line[1].decode("utf-8")}\n"
                     else:
