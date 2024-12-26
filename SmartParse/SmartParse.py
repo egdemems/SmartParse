@@ -3,7 +3,9 @@ from .get_languages import GetLanguages
 
 class CodeParser:
   
-    def walk(self, parent, lines, seen_lines, nodes={}):
+    def walk(self, parent, lines, seen_lines, nodes=None):
+        if nodes is None:
+            nodes = {}
         for child in parent.named_children:
             identifier = child.type
             start = child.start_point[0]
