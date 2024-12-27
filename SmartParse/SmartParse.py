@@ -12,12 +12,12 @@ class CodeParser:
             end = child.end_point[0] + 1
             self.walk(child, lines, seen_lines, count, nodes)
             child_lines = [line for line in lines[start:end] if line not in seen_lines]
+            #if child.named_child_count > count:
             if len(child_lines) > count:
                 if len(child_lines) < 50:
                     nodes[start] = child_lines
                     seen_lines.extend(child_lines)
                 else:
-                    print("hi")
                     self.walk(child, lines, seen_lines, count - 1, nodes)
             
         return nodes
@@ -67,6 +67,5 @@ class CodeParser:
         results = self.walk(tree.root_node, lines, seen_lines, count)
         extra = [line for line in lines if line not in seen_lines]
         if extra:
-            if extra[0][0] in results:
-                results[extra[0][0]] = extra
+            results[extra[0][0]] = extra
         return results
